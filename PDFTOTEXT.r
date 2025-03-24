@@ -35,7 +35,8 @@ library(tesseract)
 # ----------- USER CONFIGURATION REQUIRED BELOW -----------
 
 # Set path to folder with scanned PDF files (edit this!)
-input_dir <- "~/ownCloud - UNE/Teaching/HINQ302 Researching the Past in the Digital Age/content/Topic 05 Archival and Documentary Research 2/Example_Corpus/higherresexample/originals/"   
+# be sure the path yu insert ends with your folder of pdfs originals, in 'originals'!
+input_dir <- "/originals/"   
 setwd(input_dir)
 # Set path to folder where output .txt files will be saved (edit this!)
 output_dir <- "~/output"

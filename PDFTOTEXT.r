@@ -35,7 +35,7 @@ library(tesseract)
 # ----------- USER CONFIGURATION REQUIRED BELOW -----------
 
 # Set path to folder with scanned PDF files (edit this!)
-# be sure the path yu insert ends with your folder of pdfs originals, in 'originals'!
+# be sure the path you insert ends with your folder of pdfs originals, in 'originals'!
 input_dir <- "/originals/"   
 setwd(input_dir)
 # Set path to folder where output .txt files will be saved (edit this!)
@@ -49,7 +49,12 @@ output_dir <- path.expand(output_dir)
 
 # Create output directory if it doesn't exist
 if (!dir.exists(output_dir)) {
-  dir.create(output_dir, recursive = TRUE)
+  dir.create(output_dir, recursive = TRUE, showWarnings = TRUE)
+}
+
+# Check again if the output directory exists after attempting to create it
+if (!dir.exists(output_dir)) {
+  stop("Failed to create the output directory: ", output_dir)
 }
 
 # List all PDF files in the input directory
@@ -65,21 +70,25 @@ if (length(pdf_files) == 0) {
   }
 }
 print(pdf_files)
+
 # Loop over each file and extract OCR text
 for (pdf_file in pdf_files) {
   message("Processing: ", pdf_file)
-  
-  # Use OCR to extract text from each page
-  text_pages <- pdf_ocr_text(pdf_file)
-  
-  # Combine all pages into one string
-  full_text <- paste(text_pages, collapse = "\n")
-  
-  # Define output filename
-  output_file <- file.path(output_dir, paste0(tools::file_path_sans_ext(basename(pdf_file)), ".txt"))
-  
-  # Save extracted text to file
-  writeLines(full_text, con = output_file)
-  
-  message("Saved OCR text to: ", output_file)
+  tryCatch({
+    # Use OCR to extract text from each page
+    text_pages <- pdf_ocr_text(pdf_file)
+    
+    # Combine all pages into one string
+    full_text <- paste(text_pages, collapse = "\n")
+    
+    # Define output filename
+    output_file <- file.path(output_dir, paste0(tools::file_path_sans_ext(basename(pdf_file)), ".txt"))
+    
+    # Save extracted text to file
+    writeLines(full_text, con = output_file)
+    
+    message("Saved OCR text to: ", output_file)
+  }, error = function(e) {
+    message("Failed to process ", pdf_file, ": ", e$message)
+  })
 }

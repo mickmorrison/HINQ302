@@ -11,8 +11,8 @@ library(tesseract)
 
 # ----------- USER CONFIGURATION -----------
 
-input_dir <- "~/ownCloud - UNE/Teaching/HINQ302 Researching the Past in the Digital Age/content/Topic 05 Archival and Documentary Research 2/Example_Corpus/"         # Folder with scanned PDFs
-output_dir <- "~/ownCloud - UNE/Teaching/HINQ302 Researching the Past in the Digital Age/content/Topic 05 Archival and Documentary Research 2/Example_Corpus/text"             # Folder for output .txt files
+input_dir <- "File path here"         # Folder with scanned PDFs
+output_dir <- "add file path here but end with /text"             # Folder for output .txt files
 
 # ----------- DO NOT EDIT BELOW -----------
 
